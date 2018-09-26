@@ -1,0 +1,14 @@
+﻿生成启动时间为 2018/4/24 11:41:50。
+     1>项目“D:\Code\不允许创建临时变量，交换两个数的内容\不允许创建临时变量，交换两个数的内容\不允许创建临时变量，交换两个数的内容.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         D:\软件\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt "不允许创建临时变量，交换两个数的内容.c"
+         不允许创建临时变量，交换两个数的内容.c
+     1>d:\code\不允许创建临时变量，交换两个数的内容\不允许创建临时变量，交换两个数的内容\不允许创建临时变量，交换两个数的内容.c(12): warning C4013: “system”未定义；假设外部返回 int
+       Link:
+         D:\软件\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Code\不允许创建临时变量，交换两个数的内容\Debug\不允许创建临时变量，交换两个数的内容.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Code\不允许创建临时变量，交换两个数的内容\Debug\不允许创建临时变量，交换两个数的内容.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Code\不允许创建临时变量，交换两个数的内容\Debug\不允许创建临时变量，交换两个数的内容.lib" /MACHINE:X86 "Debug\不允许创建临时变量，交换两个数的内容.obj"
+         不允许创建临时变量，交换两个数的内容.vcxproj -> D:\Code\不允许创建临时变量，交换两个数的内容\Debug\不允许创建临时变量，交换两个数的内容.exe
+     1>已完成生成项目“D:\Code\不允许创建临时变量，交换两个数的内容\不允许创建临时变量，交换两个数的内容\不允许创建临时变量，交换两个数的内容.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.35
