@@ -30,7 +30,7 @@ void game()
 			break;
 		}
 		else if(num>ret)
-		{
+		{ 
 			printf("It's too big\n");
 		}
 		else
