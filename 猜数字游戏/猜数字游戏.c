@@ -5,10 +5,10 @@
 
 void menu()
 {
-	printf("***************************\n");
+	printf("*******************************\n");
 	printf("******     1. play       ******\n");
-	printf("******     0. exit        ******\n");
-	printf("***************************\n");
+	printf("******     0. exit       ******\n");
+	printf("*******************************\n");
 }
 
 void game()
@@ -30,7 +30,7 @@ void game()
 			break;
 		}
 		else if(num>ret)
-		{
+		{ 
 			printf("It's too big\n");
 		}
 		else
