@@ -1,0 +1,4 @@
+﻿  test.cpp
+f:\bit\c++代码\命名空间\命名空间\test.cpp(20): error C2143: 语法错误 : 缺少“;”(在“const”的前面)
+f:\bit\c++代码\命名空间\命名空间\test.cpp(20): error C2734: “ns::a”: 如果不是外部的，则必须初始化常量对象
+f:\bit\c++代码\命名空间\命名空间\test.cpp(22): error C2059: 语法错误:“;”
