@@ -1,0 +1,6 @@
+﻿  Test.cpp
+f:\bit\c++代码\类和对象(中)\类和对象(中)\test.cpp(135): warning C4520: “Date”: 指定了多个默认构造函数
+f:\bit\c++代码\类和对象(中)\类和对象(中)\test.cpp(139): error C2668: “Date::Date”: 对重载函数的调用不明确
+          f:\bit\c++代码\类和对象(中)\类和对象(中)\test.cpp(125): 可能是“Date::Date(int,int,int)”
+          f:\bit\c++代码\类和对象(中)\类和对象(中)\test.cpp(119): 或       “Date::Date(void)”
+          尝试匹配参数列表“()”时
