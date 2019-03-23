@@ -5,8 +5,8 @@
 
 using namespace std;
 
-TextSimilarity::TextSimilarity(string dict) :DICT(dict)
-, DICT_PATH("../dict/jieba.dict.utf8")
+TextSimilarity::TextSimilarity(string dict):DICT(dict)
+, DICT_PATH(dict + "/jieba.dict.utf8")
 , HMM_PATH(dict + "/hmm_model.utf8")
 , USER_DICT_PATH(dict + "/user.dict.utf8")
 , IDF_PATH(dict + "/idf.utf8")
