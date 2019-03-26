@@ -1,73 +1,69 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include"SeqList.h"
-#include<stdio.h>
 #include<windows.h>
 int main()
 {
 	PSeqList seqList;
-	InitSeqList(&seqList);
+	SeqListInit(&seqList);
 
 	printf("尾插:\n");
-	PushBack(&seqList, 7);
-	PushBack(&seqList, 8);
-	PushBack(&seqList, 9);
-	PrintSeqList(&seqList);
+	SeqListPushBack(&seqList, 7);
+	SeqListPushBack(&seqList, 8);
+	SeqListPushBack(&seqList, 9);
+	SeqListPrint(&seqList);
 
 	printf("\n头插:\n");
-	PushFront(&seqList, 3);
-	PushFront(&seqList, 2);
-	PushFront(&seqList, 1);
-	PrintSeqList(&seqList);
+	SeqListPushFront(&seqList, 3);
+	SeqListPushFront(&seqList, 2);
+	SeqListPushFront(&seqList, 1);
+	SeqListPrint(&seqList);
 
 	printf("\n指定位置插入:\n");
-	Insert(&seqList, 3, 4);
-	Insert(&seqList, 4, 5);
-	Insert(&seqList, 5, 6);
-	PrintSeqList(&seqList);
+	SeqListInsert(&seqList, 3, 4);
+	SeqListPrint(&seqList);
 
 	printf("\n尾删:\n");
-	PopBack(&seqList);
-	PopBack(&seqList);
-	PrintSeqList(&seqList);
+	SeqListPopBack(&seqList);
+	SeqListPopBack(&seqList);
+	SeqListPrint(&seqList);
 
 	printf("\n头删:\n");
-	PopFront(&seqList);
-	PopFront(&seqList);
-	PrintSeqList(&seqList);
+	SeqListPopFront(&seqList);
+	SeqListPrint(&seqList);
 
 	printf("\n删除下标为2的元素:\n");
-	Erase(&seqList, 2);
-	PrintSeqList(&seqList);
+	SeqListErase(&seqList, 2);
+	SeqListPrint(&seqList);
 
 	printf("\n删除第一个遇到的6:\n");
-	PushBack(&seqList, 3);
-	PushBack(&seqList, 6);
-	PushBack(&seqList, 3);
-	PushBack(&seqList, 6);
-	PushBack(&seqList, 6);
-	PushBack(&seqList, 9);
-	PrintSeqList(&seqList);
+	SeqListPushBack(&seqList, 3);
+	SeqListPushBack(&seqList, 6);
+	SeqListPushBack(&seqList, 3);
+	SeqListPushBack(&seqList, 6);
+	SeqListPushBack(&seqList, 6);
+	SeqListPushBack(&seqList, 9);
+	SeqListPrint(&seqList);
 	printf("\n");
-	Remove(&seqList, 6);
-	PrintSeqList(&seqList);
+	SeqListRemove(&seqList, 6);
+	SeqListPrint(&seqList);
 
 	printf("\n删除所有遇到的6:\n");
-	RemoveAll(&seqList, 6);
-	PrintSeqList(&seqList);
+	SeqListRemoveAll(&seqList, 6);
+	SeqListPrint(&seqList);
 
 
-	printf("\n冒泡排序:\n");
-	PushBack(&seqList, 1);
-	PushBack(&seqList, 8);
-	PushBack(&seqList, 2);
-	PushBack(&seqList, 6);
-	PrintSeqList(&seqList);
-	printf("\n");
-	BubbleSort(&seqList);
-	PrintSeqList(&seqList);
-	printf("\n");
+	//printf("\n冒泡排序:\n");
+	//SeqListPushBack(&seqList, 1);
+	//SeqListPushBack(&seqList, 8);
+	//SeqListPushBack(&seqList, 2);
+	//SeqListPushBack(&seqList, 6);
+	//SeqListPrint(&seqList);
+	////BubbleSort(&seqList);
+	//SeqListPrint(&seqList);
+	//printf("\n选择排序:\n");
 	//SelectSort(&seqList);
-	PrintSeqList(&seqList);
+	//SeqListPrint(&seqList);
+	//SelectSortOP(&seqList);
 
 	printf("\n");
 	system("pause");
