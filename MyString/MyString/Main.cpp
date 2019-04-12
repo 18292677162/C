@@ -4,7 +4,7 @@
 
 int main()
 {
-	MyString::StringTest1();
+	StringTest1();
 	system("pause");
 	return 0;
 }
