@@ -1,0 +1,16 @@
+﻿  printListFromTailToHead.cpp
+f:\bit\c++代码\剑指offer\从尾到头打印链表\从尾到头打印链表\printlistfromtailtohead.cpp(48): error C2664: “std::vector<int,std::allocator<_Ty>>::vector(std::initializer_list<int>,const std::allocator<_Ty> &)”: 无法将参数 1 从“int”转换为“const std::vector<int,std::allocator<_Ty>> &”
+          with
+          [
+              _Ty=int
+          ]
+          原因如下:  无法从“int”转换为“const std::vector<int,std::allocator<_Ty>>”
+          with
+          [
+              _Ty=int
+          ]
+          class“std::vector<int,std::allocator<_Ty>>”的构造函数声明为“explicit”
+          with
+          [
+              _Ty=int
+          ]
