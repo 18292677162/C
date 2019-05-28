@@ -1,10 +1,11 @@
-#define _CRT_SECURE_NO_WARNINGS 1
+ï»¿#define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
 using namespace std;
 
-//³ÌĞòÆô¶¯Ê±£¬½«¶ÔÏó´´½¨ºÃ
-//Ö»ÄÜ´´½¨Ò»¸ö¶ÔÏó
+//ç¨‹åºå¯åŠ¨æ—¶ï¼Œå°†å¯¹è±¡åˆ›å»ºå¥½
+//åªèƒ½åˆ›å»ºä¸€ä¸ªå¯¹è±¡
 
+//é¥¿æ±‰æ¨¡å¼
 class Singleton
 {
 public:
@@ -13,20 +14,28 @@ public:
 		return &m_instance;
 	}
 private:
-	//¹¹Ôìº¯ÊıË½ÓĞ
-	Singleton(){};
+	//æ„é€ å‡½æ•°ç§æœ‰
+	Singleton(){
+		cout << "call" << endl;
+	};
 
-	//·À¿½±´
+	//é˜²æ‹·è´
 	//C++98
-	Singleton(Singleton const&);
-	Singleton& operator=(Singleton const&);
+	//Singleton(Singleton const&);
+	//Singleton& operator=(Singleton const&);
 
 	//C++11
 	Singleton(Singleton const&) = delete;
+	
+	static Singleton m_instance;
 };
 
-Singleton 
+Singleton Singleton::m_instance;
+
 int main()
 {
+	cout << "run" << endl;
+	Singleton::GetInstance();
+	system("pause");
 	return 0;
 }
