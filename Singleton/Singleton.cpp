@@ -2,13 +2,12 @@
 #include <iostream>
 #include <mutex>
 #include <thread>
-#include <Windows.h>
 using namespace std;
 
-#if 1
+#if 0
 //饿汉模式（线程安全，对象在使用以前已经创建出来了）
 //优点：简单，线程安全
-//缺点：可能导致进程启动满，且多个单例类对象实例启动顺序不确定
+//缺点：可能导致进程启动慢，且多个单例类对象实例启动顺序不确定
 class Singleton
 {
 public:
@@ -17,10 +16,24 @@ public:
 	{
 		return m_instance;
 	}
+
+	class GCarbo
+	{
+	public:
+		~GCarbo()
+		{
+			cout << "delete instance" << endl;
+			if (nullptr != m_instance){
+				delete Singleton::m_instance;
+				m_instance = nullptr;
+			}
+		}
+	};
+
 private:
 	//构造函数私有
 	Singleton(){
-		cout << "Sigletion()" << endl;
+		cout << "Singleton" << endl;
 	};
 
 	//防拷贝
@@ -33,10 +46,12 @@ private:
 	Singleton& operator=(Singleton const&) = delete;
 	
 	static Singleton *m_instance;
+	static GCarbo Carbo;
 };
 
 //在程序入口之前完成单例对象的初始化
 Singleton* Singleton::m_instance = new Singleton;
+Singleton::GCarbo Carbo;
 
 int main()
 {
@@ -44,7 +59,7 @@ int main()
 
 	//均无法创建实例
 	//Singleton s;
-	//Singleton *p = new Singleton;
+	//Singleton* p = new Singleton;
 
 	//调用共有静态成员方法
 	Singleton* p1= Singleton::GetInstance();
@@ -68,9 +83,9 @@ int main()
 class Singleton
 {
 public:
-	static Singleton* GetInstance()
+	static volatile Singleton* GetInstance()
 	{
-		//Double-Check方式解锁保证效率和线程安全
+		//Double-Check方式加锁保证效率和线程安全
 		//保证效率
 		if (nullptr == m_instance){
 			//保证线程安全
@@ -88,8 +103,10 @@ public:
 	class CGarbo{
 	public:
 		~CGarbo(){
-			if (NULL != Singleton::m_instance){
+			cout << "delete instance" << endl;
+			if (nullptr != Singleton::m_instance){
 				delete Singleton::m_instance;
+				m_instance = nullptr;
 			}
 		}
 	};
@@ -100,7 +117,10 @@ public:
 private:
 	//构造函数私有
 	Singleton() {
-		cout << "Singleton" << endl;
+		//cout原型operator <<() 连续的cout相当于是函数的递归调用过程
+		//cout.operator<<(c1);
+		//由于线程的特性会导致输出乱序
+		printf("Singleton\n");
 	};
 
 	//防拷贝
@@ -108,31 +128,32 @@ private:
 	Singleton& operator=(Singleton const&);
 
 	//单例对象指针
-	static Singleton* m_instance;
+	static volatile Singleton* m_instance;
 	static mutex m_mtx;
 };
 
-Singleton* Singleton::m_instance = nullptr;
+volatile Singleton* Singleton::m_instance = nullptr;
 Singleton::CGarbo Garbo;
 mutex Singleton::m_mtx;
 
 void func(int n)
 {
-	cout << Singleton::GetInstance() << endl;
+	printf("%d: %p\n", n, Singleton::GetInstance());
+	//cout << Singleton::GetInstance() << " " << n << endl;
 }
 
 int main()
 {
 	cout << "main begin" << endl;
-	
+
 	thread t1(func, 1);
 	thread t2(func, 2);
 
 	t1.join();
 	t2.join();
 
-	cout << Singleton::GetInstance() << endl;
-	cout << Singleton::GetInstance() << endl;
+	printf("%p\n", Singleton::GetInstance());
+	printf("%p\n", Singleton::GetInstance());
 
 	system("pause");
 	return 0;
