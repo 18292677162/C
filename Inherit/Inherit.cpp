@@ -28,7 +28,6 @@ public:
 	int _pubB;
 };
 
-
 //公有继承
 /*
 继承方式：共有
@@ -132,7 +131,7 @@ int main()
 基类中protected成员变量子类中变成是private
 基类中private的成员变量在派生类中不可访问--->不可见
 */
-#if 1 
+#if 1
 class Derived : private Base
 {
 public:
