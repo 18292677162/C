@@ -86,7 +86,7 @@ int main()
 基类中protected成员变量子类依旧是protected
 基类中private的成员变量在派生类中不可访问--->不可见
 */
-#if 0 
+#if 0
 class Derived : protected Base
 {
 public:
@@ -131,7 +131,7 @@ int main()
 基类中protected成员变量子类中变成是private
 基类中private的成员变量在派生类中不可访问--->不可见
 */
-#if 1
+#if 0
 class Derived : private Base
 {
 public:
@@ -163,6 +163,92 @@ int main()
 	Derived d;
 	//d._pubB = 10;
 	//d.SetBase(10, 20, 30);
+	system("pause");
+	return 0;
+}
+#endif
+
+//public情况下
+// 派生类对象可以赋值给基类的对象
+// 基类指针可指向派生类对象
+// 基类的引用可以去引用派生类对象
+#if 0
+class Derived : public Base
+{
+public:
+	void SetDerived(int pro,int pub)
+	{
+		_proB = pro;
+		_pubB = pub;
+	}
+};
+
+// public：子类和基类的关系 is-a
+int main()
+{
+	Base b;
+	b.SetBase(10, 20, 30);
+	Derived d;
+	d.SetDerived(2, 3);
+	b = d;
+	//派生类对象给基类对象赋值访问越界，编译报错
+	//d = b;
+    b.Print();
+
+	//基类指针可以指向派生类
+	Base* pb = &b;
+	pb = &d;
+	
+	//派生类指针不可指向基类
+	Derived* pd = &d;
+	//pd = &b;
+	//可以强转成派生类，但不安全，访问基类多出的空间会崩溃
+	pd = (Derived*)&b;
+
+	//基类引用可以指向派生类
+	Base& rb = d;
+	//Derived& rd = b;
+	system("pause");
+	return 0;
+}
+#endif
+
+//派生类与基类中有相同名称的成员:
+//相同成员变量----与变量的类型无关
+//相同成员函数----与成员函数的类型无关
+//通过派生类调用相同名称成员时，优先调用派生类自己的成员
+//基类同名成员变量、函数无法通过派生类对象直接调用
+//派生类中对其进行隐藏
+#if 0
+class Base1
+{
+public:
+	void TestFunc(int)
+	{
+		cout << "Base::TestFunc()" << endl;
+	}
+public:
+	int _b;
+};
+
+class Derived : public Base1
+{
+public:
+	void TestFunc()
+	{
+		cout << "Derived::TestFunc()" << endl;
+	}
+public:
+	char _b;
+};
+
+int main()
+{
+	Derived d;
+	cout << sizeof(Derived) << endl;		
+	d._b = 10;
+	d.TestFunc();
+	d.Base1::TestFunc(100);
 	system("pause");
 	return 0;
 }
