@@ -6,7 +6,7 @@ using namespace std;
 //1.单继承
 
 // 2.多继承
-#if 0
+#if 1
 class B1
 {
 public:
@@ -39,7 +39,7 @@ int main()
 #endif
 
 // 3.菱形继承
-#if 0
+#if 1
 class B
 {
 public:
@@ -83,7 +83,7 @@ int main()
 #endif
 
 // 虚拟继承
-#if 0
+#if 1
 class B
 {
 public:
@@ -156,6 +156,15 @@ int main()
 	d._c1 = 2;
 	d._c2 = 3;
 	d._d = 4;
+
+	C1& c1 = d;
+	C2& c2 = d;
+
+	c1._b = 1;
+	c2._b = 2;
+
+	cout << c1._b << endl;
+
 	d.TestFunc();
 	system("pause");
 	return 0;

@@ -6,7 +6,7 @@ using namespace std;
 //  实现一个不能继承的类
 
 //	C++98 构造函数私有化，派生类掉不到基类的构造函数，无法被继承
-#if 0
+#if 1
 class NonInherit
 {
 public:
@@ -37,7 +37,7 @@ int main()
 #endif
 
 //C++11	final禁止继承
-#if 0
+#if 1
 class NonInherit final
 {
 public:

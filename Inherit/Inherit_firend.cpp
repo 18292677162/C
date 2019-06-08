@@ -1,7 +1,7 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
 
-#if 0
+#if 1
 class Base
 {
 	friend void TestFunc();
