@@ -4,7 +4,7 @@
 using namespace std;
 
 //拷贝运算符重载
-#if 0
+#if 1
 class Base
 {
 public:
@@ -80,7 +80,7 @@ int main()
 #endif
 
 //析构函数
-#if 0
+#if 1
 class Base
 {
 public:

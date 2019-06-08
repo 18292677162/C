@@ -35,7 +35,7 @@ public:
 基类中成员变量权限在派生类中权限没有改变
 基类中私有的成员变量在派生类中不可访问--->不可见
 */
-#if 0
+#if 1
 //子类  派生类
 class Derived : public Base
 {
@@ -86,7 +86,7 @@ int main()
 基类中protected成员变量子类依旧是protected
 基类中private的成员变量在派生类中不可访问--->不可见
 */
-#if 0
+#if 1
 class Derived : protected Base
 {
 public:
@@ -131,7 +131,7 @@ int main()
 基类中protected成员变量子类中变成是private
 基类中private的成员变量在派生类中不可访问--->不可见
 */
-#if 0
+#if 1
 class Derived : private Base
 {
 public:
@@ -172,7 +172,7 @@ int main()
 // 派生类对象可以赋值给基类的对象
 // 基类指针可指向派生类对象
 // 基类的引用可以去引用派生类对象
-#if 0
+#if 1
 class Derived : public Base
 {
 public:
@@ -219,7 +219,7 @@ int main()
 //通过派生类调用相同名称成员时，优先调用派生类自己的成员
 //基类同名成员变量、函数无法通过派生类对象直接调用
 //派生类中对其进行隐藏
-#if 0
+#if 1
 class Base1
 {
 public:

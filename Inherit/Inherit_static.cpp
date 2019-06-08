@@ -4,7 +4,7 @@
 using namespace std;
 
 // 基类定义了static静态成员，整个继承体系里面只有一个这样的成员
-#if 0
+#if 1
 class Base
 {
 public:
