@@ -1,13 +1,18 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
+#include <Windows.h>
+#include <string>
 
 using namespace std;
 
+//	环境	VS2013  x86
+
+//	虚函数 重写
 #if 0
 class Base
 {
 public:
-	// 鍙兘淇グ绫荤殑鎴愬憳鍑芥暟涓鸿櫄鍑芥暟
+	// 只能修饰类的成员函数为虚函数
 	virtual void TestFunc()
 	{
 		cout << "Base::TestFunc()" << endl;
@@ -15,11 +20,10 @@ public:
 };
 
 /*
-瀵瑰熀绫讳腑铏氬嚱鏁拌繘琛岄噸鍐?
-閲嶅啓鍜岄噸瀹氫箟鍖哄埆锛?
-閲嶅啓锛?
-	1.閲嶅啓鐨勫嚱鏁板湪鍩虹被涓竴瀹氭槸铏氬嚱鏁?
-	2.鍦ㄦ淳鐢熺被涓噸鍐欏熀绫荤殑铏氬嚱鏁版椂锛屼袱涓嚱鏁扮殑鍘熷瀷蹇呴』瀹屽叏鐩稿悓
+对基类中虚函数进行重写
+重写和重定义区别?
+1.重写的函数在基类中一定是虚函?
+2.在派生类中重写基类的虚函数时，两个函数的原型必须完全相同
 */
 class Derived : public Base
 {
@@ -30,11 +34,11 @@ public:
 	}
 };
 
-// 澶氭€侊細鍚屼竴涓簨鐗╋紝鍦ㄤ笉鍚屽満鏅笅琛ㄧ幇鍑轰笉鍚岀殑褰㈡€?
+// 多态：同一个事物，在不同场景下表现出不同的形态
 void TestVirtual(Base& b)
 {
-	// 缂栬瘧闃舵锛岀紪璇戝櫒涓嶈兘纭畾鍏蜂綋璋冪敤鍝釜绫荤殑铏氬嚱鏁?
-	// 鍙湁鍦ㄤ唬鐮佽繍琛岄樁娈垫墠鑳界‘瀹氬埌搴曡璋冪敤鍝釜绫荤殑铏氬嚱鏁?
+	// 编译阶段，编译器不能确定具体调用哪个类的虚函数
+	// 只有在代码运行阶段才能确定到底该调用哪个类的虚函数
 	b.TestFunc();
 }
 
@@ -49,10 +53,12 @@ int main()
 }
 #endif
 
+// 重写   重定义
+#if 0
 class Base
 {
 public:
-	// 鍙兘淇グ绫荤殑鎴愬憳鍑芥暟涓鸿櫄鍑芥暟
+	// 只能修饰类的成员函数为虚函数
 	virtual void TestFunc1()
 	{
 		cout << "Base::TestFunc1()" << endl;
@@ -92,11 +98,11 @@ public:
 };
 
 /*
-瀵瑰熀绫讳腑铏氬嚱鏁拌繘琛岄噸鍐?
-閲嶅啓鍜岄噸瀹氫箟鍖哄埆锛?
-閲嶅啓锛?
-1.閲嶅啓鐨勫嚱鏁板湪鍩虹被涓竴瀹氭槸铏氬嚱鏁?
-2.鍦ㄦ淳鐢熺被涓噸鍐欏熀绫荤殑铏氬嚱鏁版椂锛屼袱涓嚱鏁扮殑鍘熷瀷蹇呴』瀹屽叏鐩稿悓
+对基类中虚函数进行重?
+重写和重定义区别?
+重写?
+1.重写的函数在基类中一定是虚函?
+2.在派生类中重写基类的虚函数时，两个函数的原型必须完全相同
 */
 class Derived : public Base
 {
@@ -106,7 +112,7 @@ public:
 		cout << "Derived::TestFunc1()" << endl;
 	}
 
-	void TestFunc2()  //涔熶负铏氬嚱鏁帮紝淇濇寔铏氬嚱鏁扮壒鎬э紝鍥犱负鍩虹被涓槸铏氬嚱鏁?
+	void TestFunc2()  //保持虚函数特性，因为基类中是虚函数
 	{
 		cout << "Derived::TestFunc2()" << endl;
 	}
@@ -124,7 +130,7 @@ public:
 	/*
 	virtual void TestFunc5()
 	{
-		// 杩斿洖绫诲瀷涓庨噸鍐欒櫄鎷熷嚱鏁?"Base::TestFunc5" 鐨勮繑鍥炵被鍨?"int" 鏃笉鐩稿悓锛屼篃涓嶅崗鍙?
+		// 返回类型与重写虚函数"Base::TestFunc5" 的返回类值"int" 既不相同，也不协变
 		cout << "Derived::TestFunc5()" << endl;
 		return 1;
 	}
@@ -146,8 +152,8 @@ void TestVirtual(Base& b)
 {
 	b.TestFunc1();
 	b.TestFunc2();
-	b.TestFunc3();	//涓嶆淳鐢?
-	b.TestFunc4(10);	//涓嶆淳鐢?
+	b.TestFunc3();	//不派生
+	b.TestFunc4(10);	//不派生
 	b.TestFunc6();
 }
 
@@ -158,13 +164,283 @@ int main()
 	TestVirtual(b);
 	TestVirtual(d);
 
-	cout << "鎸囧悜鍩虹被鎸囬拡" << endl;
+	cout << "指向基类指针" << endl;
 	Base* pb = new Base;
 	delete pb;
 
-	cout << "鎸囧悜娲剧敓绫绘寚閽? << endl;
+	cout << "指向派生类指针 << endl;
 	pb = new Derived;
 	delete pb;
+	system("pause");
+	return 0;
+}
+#endif
+
+// 重写派生类和基类的访问权限可以不同
+#if 0
+class Base
+{
+public:
+	virtual void TestFunc1() //final
+	{
+		cout << "Base::TestFunc1()" << endl;
+	}
+};
+
+class Derived : public Base
+{
+private:
+	virtual void TestFunc1()override	//	override强制重写
+	{
+		cout << "Derived::TestFunc1()" << endl;
+	}
+};
+
+void TestVirtual(Base& b)
+{
+	b.TestFunc1();
+}
+
+int main()
+{
+	Base b;
+	Derived d;
+	TestVirtual(b);
+	TestVirtual(d);
+
+	system("pause");
+	return 0;
+}
+#endif
+
+// 抽象类
+#if 0
+class WashRoom
+{
+public:
+	void Man()
+	{
+		cout << "Man" << endl;
+	}
+	void Woman()
+	{
+		cout << "Woman" << endl;
+	}
+};
+
+//	抽象类：包含有纯虚函数的类
+//	不能实例化对象
+class Person
+{
+public:
+	//	纯虚函数
+	virtual void GoToWashRoom(WashRoom& wc) = 0;
+};
+
+class Man : public Person
+{
+public:
+	virtual void GoToWashRoom(WashRoom& wc)
+	{
+		wc.Man();
+	}
+};
+
+class Woman : public Person
+{
+public:
+	virtual void GoToWashRoom(WashRoom& wc)
+	{
+		wc.Woman();
+	}
+};
+
+void TestWC()
+{
+	Person* p = nullptr;
+	WashRoom wc;
+	for (size_t i = 0; i < 10; ++i){
+		if (rand() % 2 == 0){
+			p = new Man;
+		}
+		else{
+			p = new Woman;
+		}
+		p->GoToWashRoom(wc);
+		delete p;
+		Sleep(1000);
+	}
+}
+
+int main()
+{
+	// Person p;
+	Man m;
+	TestWC();
+	system("pause");
+	return 0;
+}
+#endif
+
+//	虚函数表
+
+/*
+什么时候默认构造函数
+1.类和对象：A类有缺省构造函?B类中包含了A类的对象
+2.继承：基类有缺省构造函数   派生类没有显式定义构造函数
+3.虚拟继承：构造函数将指向偏移量表格的虚基表指针前移到对象的前4个字节中
+4.
+*/
+#if 0
+class Base1
+{
+public:
+	void TestFunc()
+	{
+		cout << "Base::TestFunc()" << endl;
+	}
+	int _b;
+};
+
+class Base2
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "Base::TestFunc()1" << endl;
+	}
+	virtual void TestFunc2()
+	{
+		cout << "Base::TestFunc()2" << endl;
+	}
+	virtual void TestFunc3()
+	{
+		cout << "Base::TestFunc()3" << endl;
+	}
+	int _b;
+};
+
+class Derived : public Base2
+{
+public:
+	virtual void TestFunc4()
+	{
+		cout << "Derived::TestFunc()4" << endl;
+	}
+	virtual void TestFunc5()
+	{
+		cout << "Derived::TestFunc()5" << endl;
+	}
+	virtual void TestFunc1()
+	{
+		cout << "Derived::TestFunc()1" << endl;
+	}
+	virtual void TestFunc3()
+	{
+		cout << "Derived::TestFunc()3" << endl;
+	}
+public:
+	int _d;
+};
+
+typedef void(*PVF)();
+
+void PrintVFT(Base2& b, string strInfo)
+{
+	cout << strInfo << endl;
+	// 取对象的前四个字节地址
+	PVF* pVF = (PVF*)(*(int*)&b);
+	while (*pVF){
+		(*pVF)();
+		pVF++;
+	}
+	cout << endl;
+}
+
+int main()
+{
+	// 非静态成员变量+内存对齐
+	// 普通	4
+	cout << sizeof(Base1) << endl;
+	// virtual	8
+	cout << sizeof(Base2) << endl;
+	Base2 b;
+	b._b = 1;
+	PrintVFT(b, "Base VFT: ");
+
+	/*
+	派生类虚表构建过程
+	派生类和基类使用两张不同的虚表
+	1.将基类虚表中的内容拷贝一份放到派生类的虚表中
+	2.如果派生类重写了基类中的虚函数，用派生类自己
+	   的虚函数替换派生类虚表中相同偏移量位置的基类虚函数
+	3.派生类对于自己新增加的虚函数将其按照派生类中的声明次序放在虚表最后
+	*/
+	Derived d;
+	d._b = 1;
+	cout << sizeof(d) << endl;
+	PrintVFT(d, "Derived VFT: ");
+	system("pause");
+	return 0;
+}
+#endif
+
+// 虚函数调用
+class Base
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "Base::TestFunc()1" << endl;
+	}
+	virtual void TestFunc2()
+	{
+		cout << "Base::TestFunc()2" << endl;
+	}
+	virtual void TestFunc3()
+	{
+		cout << "Base::TestFunc()3" << endl;
+	}
+	int _b;
+};
+
+class Derived : public Base
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "Derived::TestFunc()1" << endl;
+	}
+	virtual void TestFunc3()
+	{
+		cout << "Derived::TestFunc()3" << endl;
+	}
+	virtual void TestFunc4()
+	{
+		cout << "Derived::TestFunc()4" << endl;
+	}
+	virtual void TestFunc5()
+	{
+		cout << "Derived::TestFunc()5" << endl;
+	}
+public:
+	int _d;
+};
+
+// 编译期间，b按静态类型编译
+void TestVirtual(Base& b)
+{
+	b.TestFunc1();
+	b.TestFunc2();
+	b.TestFunc3();
+}
+
+int main()
+{
+	Base b;
+	Derived d;
+	TestVirtual(b);
+	TestVirtual(d);
 	system("pause");
 	return 0;
 }
