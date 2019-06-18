@@ -8,7 +8,7 @@ using namespace std;
 //	环境	VS2013  x86
 
 //	虚函数 重写
-#if 0
+#if 1
 class Base
 {
 public:
@@ -54,7 +54,7 @@ int main()
 #endif
 
 // 重写   重定义
-#if 0
+#if 1
 class Base
 {
 public:
@@ -177,7 +177,7 @@ int main()
 #endif
 
 // 重写派生类和基类的访问权限可以不同
-#if 0
+#if 1
 class Base
 {
 public:
@@ -214,7 +214,7 @@ int main()
 #endif
 
 // 抽象类
-#if 0
+#if 1
 class WashRoom
 {
 public:
@@ -285,13 +285,20 @@ int main()
 //	虚函数表
 
 /*
+1.构造继承方式场景
+2.验证对象模型
+3.推测虚表中的内容
+4.通过打印虚表内容来验证推测结果
+*/
+
+/*
 什么时候默认构造函数
 1.类和对象：A类有缺省构造函?B类中包含了A类的对象
 2.继承：基类有缺省构造函数   派生类没有显式定义构造函数
 3.虚拟继承：构造函数将指向偏移量表格的虚基表指针前移到对象的前4个字节中
 4.
 */
-#if 0
+#if 1
 class Base1
 {
 public:
@@ -386,6 +393,7 @@ int main()
 #endif
 
 // 虚函数调用
+#if 1
 class Base
 {
 public:
@@ -441,6 +449,230 @@ int main()
 	Derived d;
 	TestVirtual(b);
 	TestVirtual(d);
+
+	// 调用的是虚函数，因为强转后虽然当成基类对象解析
+	// 但是派生类虚表中已经被重写，所以会调用派生类虚函数
+	Base* pb = (Base*)&d;
+	pb->TestFunc1();
+
+	// 一个类只有一份公共虚表
+	// b1, b2虚表地址相同
+	Base b1, b2;
+	system("pause");
+	return 0;
+}
+#endif
+
+// 包含虚函数的多继承
+#if 1
+class B1
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "B1::TestFunc1()" << endl;
+	}
+	virtual void TestFunc2()
+	{
+		cout << "B1::TestFunc2()" << endl;
+	}
+	int _b1;
+};
+
+class B2
+{
+public:
+	virtual void TestFunc3()
+	{
+		cout << "B2::TestFunc3()" << endl;
+	}
+	virtual void TestFunc4()
+	{
+		cout << "B2::TestFunc4()" << endl;
+	}
+	int _b2;
+};
+
+class D : public B1, public B2
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "D::TestFunc1()" << endl;
+	}
+	virtual void TestFunc4()
+	{
+		cout << "D::TestFunc4()" << endl;
+	}
+	virtual void TestFunc5()
+	{
+		cout << "D::TestFunc5()" << endl;
+	}
+	int _d;
+};
+
+typedef void (*PVFT) ();
+// PVFT定义成一个新函数指针类型
+//	指针且指向一个返回值void没有参数的函数
+
+void PrintVFT1(B1& b, string str)
+{
+	cout << str << endl;
+	PVFT* pVFT = (PVFT*)*(int*)&b;
+	while (*pVFT){
+		(*pVFT)();
+		pVFT++;
+	}
+	cout << endl;
+}
+
+void PrintVFT2(B2& b, string str)
+{
+	cout << str << endl;
+	PVFT* pVFT = (PVFT*)*(int*)&b;
+	while (*pVFT){
+		(*pVFT)();
+		pVFT++;
+	}
+	cout << endl;
+}
+
+int main()
+{
+	cout << sizeof(D) << endl;
+	D d;
+	d._b1 = 1;
+	d._b2 = 2;
+	d._d = 3;
+
+	//	派生类新增加的虚函数放到第一张虚表（最靠前的虚表）最后
+	//	调用方便
+	PrintVFT1(d, "D继承自B1 VTF: ");
+	PrintVFT2(d, "D继承自B2 VTF: ");
+
+	B1& b1 = d;
+	B2& b2 = d;
+	system("pause");
+	return 0;
+}
+#endif
+
+// 包含有虚函数的菱形继承&菱形继承虚拟继承
+class B
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "B::TestFunc1()" << endl;
+	}
+	virtual void TestFunc2()
+	{
+		cout << "B::TestFunc2()" << endl;
+	}
+};
+
+class C1 : public B
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "C1::TestFunc1()" << endl;
+	}
+	virtual void TestFunc3()
+	{
+		cout << "C1::TestFunc3()" << endl;
+	}
+	int _c1;
+};
+
+class C2 : public B
+{
+public:
+	virtual void TestFunc2()
+	{
+		cout << "C2::TestFunc2()" << endl;
+	}
+	virtual void TestFunc4()
+	{
+		cout << "C2::TestFunc4()" << endl;
+	}
+	int _c2;
+};
+
+class D : public C1, public C2
+{
+public:
+	virtual void TestFunc1()
+	{
+		cout << "D::TestFunc1()" << endl;
+	}
+	virtual void TestFunc3()
+	{
+		cout << "D::TestFunc3()" << endl;
+	}
+	virtual void TestFunc4()
+	{
+		cout << "D::TestFunc4()" << endl;
+	}
+	virtual void TestFunc5()
+	{
+		cout << "D::TestFunc5()" << endl;
+	}
+	int _d;
+};
+
+typedef void(*PVFT) ();
+// PVFT定义成一个新函数指针类型
+//	指针且指向一个返回值void没有参数的函数
+
+void PrintVFT(B& b, string str)
+{
+	cout << str << endl;
+	PVFT* pVFT = (PVFT*)*(int*)&b;
+	while (*pVFT){
+		(*pVFT)();
+		pVFT++;
+	}
+	cout << endl;
+}
+
+void PrintVFT_D1(C1& b, string str)
+{
+	cout << str << endl;
+	PVFT* pVFT = (PVFT*)*(int*)&b;
+	while (*pVFT){
+		(*pVFT)();
+		pVFT++;
+	}
+	cout << endl;
+}
+
+void PrintVFT_D2(C2& b, string str)
+{
+	cout << str << endl;
+	PVFT* pVFT = (PVFT*)*(int*)&b;
+	while (*pVFT){
+		(*pVFT)();
+		pVFT++;
+	}
+	cout << endl;
+}
+
+int main()
+{
+	B b;
+	C1 c1;
+	c1._c1 = 1;
+	C2 c2;
+	c2._c2 = 2;
+	D d;
+	d._d = 3;
+
+	PrintVFT(b, "B VFT: ");
+	PrintVFT(c1, "C1 VFT: ");
+	PrintVFT(c2, "C2 VFT: ");
+	PrintVFT_D1(d, "D_C1 VFT: ");
+	PrintVFT_D2(d, "D_C2 VFT: ");
 	system("pause");
 	return 0;
 }
