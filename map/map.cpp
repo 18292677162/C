@@ -118,5 +118,5 @@ int main()
 	TestMap3();
 	TestSet1();
 	TestSet2();
-	return ;
+	return 0;
 }
